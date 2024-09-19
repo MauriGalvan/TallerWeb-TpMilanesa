@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vista Receta</title>
+    <link rel="stylesheet" th:href="@{/css/vistaReceta.css}">
+</head>
+<body>
+<nav>
+    <div class="logo">
+        <img src="https://i.postimg.cc/WzB31sKN/milanesa-logo.png" width="200px">
+    </div>
+    <section class="botones">
+        <button type="button" class="recetas">
+            Recetas
+        </button>
+        <button type="button" class="planificador">
+            Planificador
+        </button>
+        <button type="button" class="listaCompras">
+            Lista de compras
+        </button>
+        <button type="button" class="perfil">
+            Perfil
+        </button>
+    </section>
+</nav>
+<main>
+    <h1>Recetas</h1>
+    <section class="filtros">
+        <form class="tiempo" method="post">
+            <label for="time">
+                Tiempo de preparación
+            </label>
+            <select id="time">
+                <option value="-">-</option>
+                <option value="media-hora">30min</option>
+                <option value="una-hora">1h</option>
+            </select>
+        </form>
+        <form class="categoria" method="post">
+            <label for="categorias">
+                Categoría
+            </label>
+            <select id="categorias">
+                <option value="todos">Todos</option>
+                <option value="desayuno">Desayuno/Merienda</option>
+                <option value="almuerzo">Almuerzo/Cena</option>
+            </select>
+        </form>
+    </section>
+    <section class="recetas">
+        <article th:each="receta : ${todasLasRecetas}">
+            <a th:href="@{/detalleReceta(id=${receta.id})}" class="receta1 link">
+                <h2 class="titulo" th:text="${receta.titulo}">Nombre comida</h2>
+                <p class="desc" th:text="${receta.descripcion}">Descripción</p>
+                <img class="foto" th:src="${receta.imagen}" alt="Imagen receta">
+            </a>
+        </article>
+    </section>
+</main>
+<footer>
+</footer>
+</body>
+</html>
