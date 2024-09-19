@@ -57,40 +57,44 @@
 
     <dialog id="modal" >
         <h2>Cargar Nueva Receta</h2>
-        <form action="" method="post" enctype="multipart/form-data">
+
+        <form action="#" th:action="@{/nueva-receta}" method="POST" enctype="multipart/form-data" th:object="${receta}">
             <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" required>
+            <input th:field="*{titulo}" type="text" id="titulo" name="titulo" required>
             <br>
-            <label for="tiempo">Tiempo de Preparación</label>
-            <select id="tiempo" name="tiempo">
+
+            <label for="tiempo">Tiempo de Preparación:</label>
+            <select th:field="*{tiempo_preparacion}" id="tiempo" name="tiempo">
                 <option value="-">-</option>
                 <option value="30.0">30min</option>
                 <option value="60.0">1h</option>
             </select>
             <br>
-            <label for="cat">
-                Categoría
-            </label>
-            <select id="cat" name="categoria">
+
+            <label for="categoria">Categoría:</label>
+            <select th:field="*{categoria}" id="categoria" name="categoria">
                 <option value="todos">Todos</option>
                 <option value="desayuno">Desayuno/Merienda</option>
                 <option value="almuerzo">Almuerzo/Cena</option>
             </select>
             <br>
-            <label for="ingredientes">Ingredientes:</label><br>
-            <textarea id="ingredientes" name="ingredientes" required></textarea>
+
+            <label for="ingredientes">Ingredientes:</label>
+            <textarea th:field="*{ingredientes}" id="ingredientes" name="ingredientes" required></textarea>
             <br>
 
-            <label for="descripcion">Descripción:</label><br>
-            <textarea id="descripcion" name="descripcion" required></textarea>
+            <label for="descripcion">Descripción:</label>
+            <textarea th:field="*{descripcion}" id="descripcion" name="descripcion" required></textarea>
             <br>
+
             <label for="imagen">Imagen:</label>
+            <input th:field="*{imagen}" type="file" id="imagen" name="imagen" accept="image/*">
             <br>
-            <input type="file" id="imagen" name="imagen" accept="image/*" >
-            <br>
-            <button type="submit" id="btn-cerrar-modal">Cerrar</button>
+
             <button type="submit">Guardar Receta</button>
         </form>
+
+
 
     </dialog>
     <section class="recetas">
