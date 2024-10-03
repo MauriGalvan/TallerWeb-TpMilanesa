@@ -26,4 +26,19 @@ public class ControladorDetalleReceta {
         modelo.put("unaReceta", r);
         return new ModelAndView("detalleReceta", modelo);
     }
+
+    public int contarVecesVisitadasDeUnaReceta(int id) {
+        Receta receta = servicioReceta.getUnaRecetaPorId(id);
+        int contador = obtenerContadorDeRecetaEspecifica(receta);
+        if (mostrarDetalleReceta(id) != null){
+            contador++;
+        }
+        return contador;
+    }
+
+    private int obtenerContadorDeRecetaEspecifica(Receta receta) {
+        if (contarVecesVisitadasDeUnaReceta(receta.getId()) != 0){
+
+        }
+    }
 }

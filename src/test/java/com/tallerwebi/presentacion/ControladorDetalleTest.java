@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -50,6 +51,21 @@ public class ControladorDetalleTest {
         assertThat(recetaDelModelo.getTitulo(), equalTo(titulo));
         assertThat(recetaDelModelo.getImagen(), equalTo(imagen));
         assertThat(recetaDelModelo.getPasos(), equalTo(pasos));
+    }
+
+    @Test
+    public void queSePuedaRegistrarUnContadorCadaVezQueSeAbreUnDetalleReceta(){
+        String titulo = "Milanesa napolitana";
+        TiempoDePreparacion tiempo_preparacion = TiempoDePreparacion.TREINTA_MIN;
+        Categoria categoria = Categoria.ALMUERZO_CENA;
+        Receta receta = new Receta(titulo, tiempo_preparacion, categoria, ".", ".", ".", ".");
+
+        when(servicioRecetaMock.getUnaRecetaPorId(receta.getId())).thenReturn(receta);
+        ModelAndView model = controlador.mostrarDetalleReceta(receta.getId());
+
+        int contador = controlador.contarVecesVisitadasDeUnaReceta(receta.getId());
+
+        assertEquals(1, contador);
     }
 
 }
