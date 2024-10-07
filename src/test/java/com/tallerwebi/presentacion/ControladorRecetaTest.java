@@ -51,6 +51,8 @@ public class ControladorRecetaTest {
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("detalleReceta"));
     }
 
+
+
     @Test
     public void QueRetorneTodasLasRecetasCuandoNoHayNingunFiltroSeleccionadoEnCategorias() {
         //Dado
@@ -94,4 +96,41 @@ public class ControladorRecetaTest {
         assertThat(recetas.get(0).getCategoria(), equalTo(Categoria.ALMUERZO_CENA));
         assertThat(recetas.get(1).getCategoria(), equalTo(Categoria.ALMUERZO_CENA));
     }
+
+    @Test
+    public void QueRetorneRecetasCuandoSeBuscaPorTitulo() {
+        // Dado
+        String tituloBuscado = "Milanesa";
+        List<Receta> recetasMock = new ArrayList<>();
+        recetasMock.add(new Receta("Milanesa napolitana", TiempoDePreparacion.TREINTA_MIN, Categoria.ALMUERZO_CENA, "https://i.postimg.cc/7hbGvN2c/mila-napo.webp", "Carne, Huevo, Pan rallado, Perejil, Papas", "No vayas más al club de la milanesa, traelo a tu casa.", "Aplasta la carne y condimenta. Bate un huevo y mezcla pan rallado con perejil. Pasa cada filete por el huevo y luego por el pan rallado. Fríe hasta dorar. Sirve con papas y salsa de tomate, jamón y queso."));
+
+        // Cuando
+        when(servicioRecetaMock.buscarRecetasPorTitulo(tituloBuscado)).thenReturn(recetasMock);
+        ModelAndView modelAndView = controladorReceta.buscarRecetasPorTitulo(tituloBuscado);
+
+        // Entonces
+        List<Receta> recetas = (List<Receta>) modelAndView.getModel().get("todasLasRecetas");
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("vistaReceta"));
+        assertThat(recetas, hasSize(1));
+        assertThat(recetas.get(0).getTitulo(), containsString(tituloBuscado));
+    }
+
+    @Test
+    public void QueSePuedaCargarUnaReceta(){
+        String titulo = "Milanesa napolitana";
+        TiempoDePreparacion tiempo = TiempoDePreparacion.TREINTA_MIN;
+        Categoria categoria = Categoria.ALMUERZO_CENA;
+        String imagen = "https://i.postimg.cc/7hbGvN2c/mila-napo.webp";
+        String ingredientes = "Jamón, Queso, Tapa pascualina, Huevo, Tomate";
+        String descripcion = "Esto es una descripción de mila napo";
+        String pasos = ".";
+
+        ModelAndView modelAndView = controladorReceta.guardarReceta(titulo, pasos, tiempo, categoria, ingredientes, descripcion, imagen);
+
+        Receta recetaEsperada = new Receta(titulo, tiempo, categoria, imagen, ingredientes, descripcion, pasos);
+        verify(servicioRecetaMock, times(1)).guardarReceta(recetaEsperada);
+
+        assertEquals("redirect:/vista-receta", modelAndView.getViewName());
+    }
+
 }

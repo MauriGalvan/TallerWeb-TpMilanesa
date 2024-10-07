@@ -33,7 +33,14 @@ public class RepositorioRecetaImpl implements RepositorioReceta {
 
     @Override
     public void eliminar(Receta receta) {
+        
         sessionFactory.getCurrentSession().delete(receta);
+    }
+
+    @Override
+    public void actualizar(Receta receta) {
+
+        sessionFactory.getCurrentSession().update(receta);
     }
 
 
@@ -80,4 +87,14 @@ public class RepositorioRecetaImpl implements RepositorioReceta {
         query.setParameter("categoria", categoria);
         return query.getResultList();
     }
+
+    @Override
+    public List<Receta> buscarRecetasPorTitulo(String titulo) {
+        String hql = "FROM Receta r WHERE lower(r.titulo) LIKE :titulo";
+        Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("titulo", "%" + titulo.toLowerCase() + "%");
+        return query.getResultList();
+    }
+
+
 }
