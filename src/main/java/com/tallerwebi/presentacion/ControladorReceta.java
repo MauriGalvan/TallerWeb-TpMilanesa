@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -82,6 +83,13 @@ public class ControladorReceta {
             recetas = servicioReceta.getTodasLasRecetas();
         }
 
+        System.out.println("Antes de ordenar: " + recetas);
+        for (Receta receta : recetas) {
+            System.out.println("Receta: " + receta.getTitulo() + ", Clicks: " + receta.getContadorClicks());
+        }
+        recetas = servicioReceta.ordenarPorPopularidad(recetas);
+        System.out.println("despues de ordenar" + recetas);
+
         modelo.put("todasLasRecetas", recetas);
         modelo.put("categoriaSeleccionada", categoria);
         modelo.put("tiempoSeleccionado", tiempo);
@@ -99,7 +107,7 @@ public class ControladorReceta {
             @RequestParam("descripcion") String descripcion,
             @RequestParam("imagen") String imagen) {
 
-        System.out.println("Título recibido: " + titulo);
+        System.out.println("Título recibido: " + titulo); //?
 
         Receta nuevaReceta = new Receta(titulo, tiempoPreparacion, categoria, imagen, ingredientes, descripcion, pasos);
         servicioReceta.guardarReceta(nuevaReceta);

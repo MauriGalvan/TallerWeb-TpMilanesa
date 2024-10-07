@@ -25,6 +25,11 @@ public class ControladorDetalleReceta {
     public ModelAndView mostrarDetalleReceta(Integer id) {
         ModelMap modelo = new ModelMap();
         Receta receta = servicioReceta.getUnaRecetaPorId(id);
+
+        //cuenta las visitas
+        receta.incrementarClicks();
+        servicioReceta.actualizarReceta(receta);
+
         modelo.put("unaReceta", receta);
         return new ModelAndView("detalleReceta", modelo);
     }

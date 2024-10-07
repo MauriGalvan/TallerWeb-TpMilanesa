@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class ServicioRecetaImpl implements ServicioReceta {
@@ -68,10 +66,26 @@ public class ServicioRecetaImpl implements ServicioReceta {
         }
     }
 
-
     @Override
     public List<Receta> buscarRecetasPorTitulo(String titulo) {
         return repositorioReceta.buscarRecetasPorTitulo(titulo);
     }
+
+    @Override
+    public List<Receta> ordenarPorPopularidad(List<Receta> recetas) {
+        System.out.println("recetas: " + recetas);
+//        Collections.shuffle(recetas); //mezcla la lista en orden aleatorio
+//
+//        recetas.sort(Comparator.comparingInt(Receta::getContadorClicks).reversed() //ordena de mayor a menor por clicks
+//                .thenComparing(this::ordenarAleatoriamenteSiCoincidenClicks)); //otro criterio de ordenamiento si coinciden
+        return recetas;
+    }
+
+    private int ordenarAleatoriamenteSiCoincidenClicks(Receta receta1, Receta receta2) {
+        int random1 = (int) (Math.random() * Integer.MAX_VALUE);
+        int random2 = (int) (Math.random() * Integer.MAX_VALUE);
+        return Integer.compare(random1, random2);
+    }
+
 
 }
