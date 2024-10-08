@@ -57,7 +57,7 @@ public class Receta {
         return tiempo_preparacion;
     }
 
-    public void setTiempo_preparacion(TiempoDePreparacion TiempoDePreparacion) {
+    public void setTiempo_preparacion(TiempoDePreparacion tiempo_preparacion) {
         this.tiempo_preparacion = tiempo_preparacion;
     }
 

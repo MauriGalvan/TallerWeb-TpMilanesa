@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -83,18 +84,27 @@ public class ControladorReceta {
             recetas = servicioReceta.getTodasLasRecetas();
         }
 
-        System.out.println("Antes de ordenar: " + recetas);
-        for (Receta receta : recetas) {
-            System.out.println("Receta: " + receta.getTitulo() + ", Clicks: " + receta.getContadorClicks());
-        }
-        recetas = servicioReceta.ordenarPorPopularidad(recetas);
-        System.out.println("despues de ordenar" + recetas);
+        recetas = this.ordenarPorPopularidad(recetas);
 
         modelo.put("todasLasRecetas", recetas);
         modelo.put("categoriaSeleccionada", categoria);
         modelo.put("tiempoSeleccionado", tiempo);
 
         return new ModelAndView("vistaReceta", modelo);
+    }
+
+    public List<Receta> ordenarPorPopularidad(List<Receta> recetas) {
+        System.out.println("recetas: " + recetas);
+        Collections.shuffle(recetas); //mezcla la lista en orden aleatorio
+
+        recetas.sort(Comparator.comparingInt(Receta::getContadorClicks).reversed() //ordena de mayor a menor por clicks
+                .thenComparing(this::ordenarAleatoriamenteSiCoincidenClicks)); //otro criterio de ordenamiento si coinciden
+        return recetas;
+    }
+    private int ordenarAleatoriamenteSiCoincidenClicks(Receta receta1, Receta receta2) {
+        int random1 = (int) (Math.random() * Integer.MAX_VALUE);
+        int random2 = (int) (Math.random() * Integer.MAX_VALUE);
+        return Integer.compare(random1, random2);
     }
 
     @RequestMapping(value = "/guardarReceta", method = RequestMethod.POST)
