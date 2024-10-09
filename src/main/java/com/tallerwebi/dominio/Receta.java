@@ -106,11 +106,11 @@ public class Receta {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Receta receta = (Receta) o;
-        return id == receta.id && Objects.equals(titulo, receta.titulo) && tiempo_preparacion == receta.tiempo_preparacion && categoria == receta.categoria && Objects.equals(imagen, receta.imagen) && Objects.equals(ingredientes, receta.ingredientes) && Objects.equals(descripcion, receta.descripcion) && Objects.equals(pasos, receta.pasos);
+        return id == receta.id && contadorClicks == receta.contadorClicks && tiempo_preparacion == receta.tiempo_preparacion && categoria == receta.categoria && Objects.equals(titulo, receta.titulo) && Objects.equals(imagen, receta.imagen) && Objects.equals(ingredientes, receta.ingredientes) && Objects.equals(descripcion, receta.descripcion) && Objects.equals(pasos, receta.pasos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, titulo, tiempo_preparacion, categoria, imagen, ingredientes, descripcion, pasos);
+        return Objects.hash(id, tiempo_preparacion, categoria, titulo, imagen, ingredientes, descripcion, pasos, contadorClicks);
     }
 }

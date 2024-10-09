@@ -84,7 +84,7 @@ public class ControladorReceta {
             recetas = servicioReceta.getTodasLasRecetas();
         }
 
-        recetas = this.ordenarPorPopularidad(recetas);
+//        recetas = this.ordenarPorPopularidad(recetas);
 
         modelo.put("todasLasRecetas", recetas);
         modelo.put("categoriaSeleccionada", categoria);
@@ -93,19 +93,18 @@ public class ControladorReceta {
         return new ModelAndView("vistaReceta", modelo);
     }
 
-    public List<Receta> ordenarPorPopularidad(List<Receta> recetas) {
-        System.out.println("recetas: " + recetas);
-        Collections.shuffle(recetas); //mezcla la lista en orden aleatorio
-
-        recetas.sort(Comparator.comparingInt(Receta::getContadorClicks).reversed() //ordena de mayor a menor por clicks
-                .thenComparing(this::ordenarAleatoriamenteSiCoincidenClicks)); //otro criterio de ordenamiento si coinciden
-        return recetas;
-    }
-    private int ordenarAleatoriamenteSiCoincidenClicks(Receta receta1, Receta receta2) {
-        int random1 = (int) (Math.random() * Integer.MAX_VALUE);
-        int random2 = (int) (Math.random() * Integer.MAX_VALUE);
-        return Integer.compare(random1, random2);
-    }
+//    public List<Receta> ordenarPorPopularidad(List<Receta> recetas) {
+//        Collections.shuffle(recetas); //mezcla la lista en orden aleatorio
+//
+//        recetas.sort(Comparator.comparingInt(Receta::getContadorClicks).reversed() //ordena de mayor a menor por clicks
+//                .thenComparing(this::ordenarAleatoriamenteSiCoincidenClicks)); //otro criterio de ordenamiento si coinciden
+//        return recetas;
+//    }
+//    private int ordenarAleatoriamenteSiCoincidenClicks(Receta receta1, Receta receta2) {
+//        int random1 = (int) (Math.random() * Integer.MAX_VALUE);
+//        int random2 = (int) (Math.random() * Integer.MAX_VALUE);
+//        return Integer.compare(random1, random2);
+//    }
 
     @RequestMapping(value = "/guardarReceta", method = RequestMethod.POST)
     public ModelAndView guardarReceta(
